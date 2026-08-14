@@ -45,7 +45,10 @@ void setup() {
     Serial.println("LD2410C not detected");
   }
 }
-// yo
+
+bool firstReading = true;
+bool lastOccupied = false;
+
 void loop() {
   
   /*
@@ -79,12 +82,60 @@ void loop() {
     digitalWrite(LED_PIN, LOW);
   }
 
-  if (WiFi.status() == WL_CONNECTED)
+  if ((firstReading || lastOccupied) != occupied)
   {
-    HTTPClient http;
+    Serial.println("--------------------------------");
+    Serial.print("Occupied: ");
+    
+    if (occupied) 
+    {
+      Serial.println("YES");
+    } 
+    else 
+    {
+      Serial.println("NO");
+    }
 
-    http.begin(serverURL);
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.println(" m");
 
-    http.addHeader("Content-Type", "application/json");
-  }
+    if (WiFi.status() == WL_CONNECTED)
+    {
+      HTTPClient http;
+
+      http.begin(serverURL);
+      http.addHeader("Content-Type", "application/json");
+
+      String json = "{";
+      json += "\"occupied\":";
+      
+      if (occupied) 
+      {
+        json += "true";
+      } 
+      else 
+      {
+        json += "false";
+      }
+
+      json += ",";
+      json += "\"distance\":";
+      json += String(distance, 2);
+      json += "}";
+
+      Serial.println("Sending:");
+      Serial.println(json);
+
+      int response = http.POST(json);
+
+      Serial.print("HTTP Response: ");
+      Serial.println(response);
+
+      http.end();
+    }
+
+    lastOccupied = occupied;
+    firstReading = false;
+
 }
