@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+.eggs/
+
+# Virtual environments
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# PlatformIO
+.pio/
+.pioenvs/
+piolibdeps/
+platformio.ini.bak
+
+# VS Code and IDEs
+.vscode/
+.idea/
+
+# Logs and databases
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Build artifacts
+Debug/
+Release/
