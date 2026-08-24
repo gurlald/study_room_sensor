@@ -8,10 +8,10 @@
 HardwareSerial radarSerial(2);
 ld2410 radar;
 
-const char* ssid = "CIK1000M_AC-dc48-5G";
+const char* ssid = "CIK1000M_AC-dc48";
 const char* password = "3c9066cfdc48";
 
-const char* serverURL = "http://192.168.1.8:8000/api/occupancy";
+const char* serverURL = "http://192.168.1.8:8000/occupancy";
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
@@ -71,7 +71,7 @@ void loop() {
   radar.read();
 
   bool occupied = radar.presenceDetected();
-  float distance = radar.detectionDistance() / 100;
+  float distance = (radar.detectionDistance() / 100.0f);
 
   if (radar.presenceDetected()) 
   {
@@ -138,4 +138,5 @@ void loop() {
     lastOccupied = occupied;
     firstReading = false;
 
+  }
 }
