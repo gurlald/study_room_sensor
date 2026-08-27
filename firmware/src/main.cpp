@@ -2,16 +2,12 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include "ld2410.h"
+#include "private.h"
 
 #define LED_PIN 2 
 
 HardwareSerial radarSerial(2);
 ld2410 radar;
-
-const char* ssid = "CIK1000M_AC-dc48";
-const char* password = "3c9066cfdc48";
-
-const char* serverURL = "http://192.168.1.8:8000/occupancy";
 
 void setup() {
   pinMode(LED_PIN, OUTPUT);
@@ -19,7 +15,7 @@ void setup() {
 
   Serial.println("Connecting to wifi...");
 
-  WiFi.begin(ssid, password);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
 
   while (WiFi.status() != WL_CONNECTED) 
   {
@@ -104,12 +100,16 @@ void loop() {
     {
       HTTPClient http;
 
-      http.begin(serverURL);
+      http.begin(API_URL);
       http.addHeader("Content-Type", "application/json");
 
       String json = "{";
+
+      json += "\"room_id\":";  
+      json += ROOM_ID;                
+      json += ",";                    
+
       json += "\"occupied\":";
-      
       if (occupied) 
       {
         json += "true";

@@ -1,10 +1,14 @@
 # PlatformIO
 .pio/
 .vscode/
+secrets.h
 
 # Python virtual environment
 backend/venv/
 venv/
+
+# Backend
+.env
 
 # Python
 __pycache__/
@@ -14,3 +18,4 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
