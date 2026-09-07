@@ -13,14 +13,13 @@ async function fetchOccupancy() {
 
   const data = await res.json();
 
-  // Backend currently returns one room object,
-  // so wrap it in an array for FloorPlan.
+  // Put object in array for floorplan
   return Array.isArray(data) ? data : [data];
 }
 
 export default function App() {
   const [floor, setFloor]   = useState("7");
-  const [status, setStatus] = useState([]);   // always an array
+  const [status, setStatus] = useState([]);  
 
   useEffect(() => {
     let alive = true;
@@ -47,7 +46,6 @@ export default function App() {
         <div className="dropdown">
           <button className="dropdown-btn">FLOOR {floor} ▾</button>
         </div>
-        {/* time picker and slider removed */}
       </header>
 
       <FloorPlan

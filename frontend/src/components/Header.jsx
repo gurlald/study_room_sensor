@@ -1,9 +1,6 @@
 import { useState } from "react";
 
-// ============================================================
-// FLOOR LIST — add new floors here (must match PNG filenames
-// placed in /public, and match the floor keys in roomCoords.js)
-// ============================================================
+// Floor 6 was removed later, but this is left here for any future expansion
 const FLOORS = [
   { num: 7, file: "floor7.png" },
   { num: 6, file: "floor6.png" },
@@ -11,7 +8,7 @@ const FLOORS = [
 
 export default function Header({ selectedFloor, onFloorChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
-
+  
   return (
     <header className="topbar">
       <div className="dropdown">

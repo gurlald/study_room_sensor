@@ -2,27 +2,24 @@ import React, { useRef, useState } from 'react';
 import { ROOM_COORDS } from '../roomCoords';
 import '../index.css';
 
-// Natural size of floor7.png in pixels
 const NATURAL_W = 900;
 const NATURAL_H = 1000;
 
-// Static rooms you want to hard‐color always
+// The rooms not used for the demo were colored statically 
 const STATIC_OCCUPANCY = {
-  733: false,  // free (green)
-  734: false,  // free
-  735: true   // free
+  733: false, 
+  734: false, 
+  735: true 
 };
 
-// The one demo room that actually flips
 const DEMO_ROOM_ID = 204;
 
 export default function FloorPlan({ floor, floorFile, status }) {
   const containerRef = useRef(null);
   const [zoom, setZoom] = useState(1);
 
-  // 1) Safe array
   const arr = Array.isArray(status) ? status : [];
-  // 2) Build lookup
+
   const statusMap = arr.reduce((m, { room_id, occupied }) => {
     m[room_id] = occupied;
     return m;
@@ -46,10 +43,10 @@ export default function FloorPlan({ floor, floorFile, status }) {
           {coords.map(cfg => {
             let occupied;
             if (cfg.room_id === DEMO_ROOM_ID) {
-              // dynamic
+              // Changes based on occupancy status
               occupied = statusMap[DEMO_ROOM_ID];
             } else if (cfg.room_id in STATIC_OCCUPANCY) {
-              // static
+              // Non-demo rooms, stay one static color
               occupied = STATIC_OCCUPANCY[cfg.room_id];
             } else {
               occupied = undefined;
@@ -60,9 +57,7 @@ export default function FloorPlan({ floor, floorFile, status }) {
               occupied === false ? 'free' :
               '';
 
-            // Circle or rectangle
             if (cfg.shape === 'circle') {
-              // pixel → percent
               const sizePct = (cfg.r * 2 / NATURAL_W) * 100;
               const leftPct = ((cfg.cx - cfg.r) / NATURAL_W) * 100;
               const topPct  = ((cfg.cy - cfg.r) / NATURAL_H) * 100;

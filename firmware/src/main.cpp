@@ -9,6 +9,7 @@
 HardwareSerial radarSerial(2);
 ld2410 radar;
 
+// Connecting the ESP32 to wifi, and ensuring that the LD2410C is connected
 void setup() {
   pinMode(LED_PIN, OUTPUT);
   Serial.begin(115200);
@@ -46,29 +47,13 @@ bool firstReading = true;
 bool lastOccupied = false;
 
 void loop() {
-  
-  /*
-  radar.read();
-
-  if (radar.presenceDetected()) 
-  {
-    Serial.println("Presence detected");
-    digitalWrite(LED_PIN, HIGH);
-  } 
-  else 
-  {
-    Serial.println("No presence");
-    digitalWrite(LED_PIN, LOW);
-  }
-
-  delay(500);
-  */
 
   radar.read();
 
   bool occupied = radar.presenceDetected();
   float distance = (radar.detectionDistance() / 100.0f);
 
+  // Lighting the onboard LED when presence is detected
   if (radar.presenceDetected()) 
   {
     digitalWrite(LED_PIN, HIGH);
@@ -78,6 +63,7 @@ void loop() {
     digitalWrite(LED_PIN, LOW);
   }
 
+  // Only sending occupation and distance data if a new occupation event is detected
   if ((firstReading || lastOccupied) != occupied)
   {
     Serial.println("--------------------------------");
@@ -96,6 +82,7 @@ void loop() {
     Serial.print(distance);
     Serial.println(" m");
 
+    // Creating a json file with the room ID, occupation status, and distance
     if (WiFi.status() == WL_CONNECTED)
     {
       HTTPClient http;

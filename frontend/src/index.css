@@ -1,4 +1,4 @@
-/* ---------- Reset / base ---------- */
+
 * { box-sizing: border-box; }
 html, body, #root {
   margin:0; padding:0;
@@ -7,7 +7,6 @@ html, body, #root {
   background: #fff; color: #2c3e50;
 }
 
-/* ---------- Top bar ---------- */
 .topbar {
   display: flex;
   align-items: center;
@@ -24,30 +23,29 @@ html, body, #root {
   cursor: pointer;
 }
 
-/* ---------- Blueprint area & centering ---------- */
 .blueprint-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 65px); /* header height = 65px */
+  height: calc(100vh - 65px);
   overflow: hidden;
 }
 .svg-container {
   position: relative;
 }
 
-/* ---------- PNG floor plan + overlays ---------- */
 .png-floorplan {
   position: relative;
   max-width: 90vw;
   max-height: 90vh;
-  width: 900px;              /* ← set to your PNG’s natural width */
-  aspect-ratio: 900 / 1000;  /* ← set your PNG’s w/h ratio */
+  width: 900px;              
+  aspect-ratio: 900 / 1000;  
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.2s ease;
 }
+
 .room-overlay {
   position: absolute;
   background: rgba(203,224,238,0.55);
@@ -69,7 +67,6 @@ html, body, #root {
   border-color: #b34747;
 }
 
-/* ---------- Zoom controls ---------- */
 .zoom-controls {
   position: absolute;
   left: -156px;
@@ -87,4 +84,3 @@ html, body, #root {
   cursor: pointer;
 }
 
-/* remove source-tag rules (no longer used) */
